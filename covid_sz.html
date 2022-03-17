@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>苏州新冠流调可视化3月16日新增</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <style>
+    body,
+    html,
+    #container {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+    </style>
+    <script src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=UQ13ELA0OW1lchPF2G850Hd1TSQfhecj"></script>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+</html>
+<script>
+// 新建点, 把points.txt里的复制过来, 最后的逗号要删掉
+var points = [
+{"lat":31.320396367590526,"lng":120.67596551151783,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区喜士多便利店（苏悦广场南楼）"},
+    {"lat":31.319873944794413,"lng":120.67219918600615,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区尼盛广场B1楼福茂多"},
+         {"lat":31.32788827021618,"lng":120.65322760244928,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市姑苏区日规路1-1号"},
+   {"lat":31.308867912353865,"lng":120.65067300124,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市姑苏区盱眙怪怪龙虾私房菜（庄先湾店）"},
+      {"lat":31.32493516840097,"lng":120.65576037483466,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区大润发（东环路店）"},
+       {"lat":31.33648584907897,"lng":120.71728900226564,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区雅戈尔雷迪森广场"},
+             {"lat":31.32493470569423,"lng":120.685162363329,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区苏州中心"},
+          {"lat":31.314140520898977,"lng":120.68030585425039,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区加城花园"},
+   {"lat":31.319873944794413,"lng":120.67219918600615,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区瑞幸咖啡（尼盛广场店）"},
+          {"lat":31.32673963006906,"lng":120.6568492109433,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区天兴苑面饭店"},
+       {"lat":31.324815867105816,"lng":120.67723697313667,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区悠然汤洗浴温泉"},
+  {"lat":31.32959250376918,"lng":120.71837271803288,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区谭鸭血老火锅（新光天地店）"},
+          {"lat":31.326946687093038,"lng":120.71753567695869,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区圆融天幕"},
+            {"lat":31.329135988153585,"lng":120.63410267814184,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市姑苏区拙政园"},
+           {"lat":31.32905864246544,"lng":120.63431674434487,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市姑苏区苏州博物馆"},
+         {"lat":31.283742860995442,"lng":121.08409489962989,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区万科美好荟"},
+    {"lat":31.327516650625867,"lng":120.72134053977675,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区圆融时代广场西堤牛排"},
+       {"lat":31.321392464119373,"lng":120.67572108258858,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区苏悦广场B1楼"},
+         {"lat":31.32671996541159,"lng":120.65507811179984,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区东港邻里菜场"},
+     {"lat":31.32372942398022,"lng":120.65431787584673,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区徐州地锅鸡（东环店）"},
+                {"lat":31.35929413884147,"lng":120.9572078090567,"id":"3月16日新增无症状感染者","dizhi":"江苏省昆山市昆山南站"},
+          {"lat":31.321392464119373,"lng":120.67572108258858,"id":"3月16日新增无症状感染者","dizhi":"江苏省苏州市工业园区苏悦广场"}
+   	];
+
+// 创建地图，地图中心为第一个点
+var map = new BMapGL.Map('container');
+map.centerAndZoom(new BMapGL.Point(points[0].lng, points[0].lat), 15);
+
+function showInfo(bmap, point){
+    var opts = {
+        width: 200,
+        height: 100,
+        title: '病例详情'
+    };
+    var sContent = "病例编号/来源: " + point.id + "<br>" + "地址: " + point.dizhi;
+    var infoWindow = new BMapGL.InfoWindow(sContent, opts);
+    bmap.openInfoWindow(infoWindow, point);
+}
+// 循环创建点标记
+for(var i = 0, pointsLen = points.length; i < pointsLen; i++){
+    var point = new BMapGL.Point(points[i].lng, points[i].lat);
+    var marker = new BMapGL.Marker(point);
+    map.addOverlay(marker);
+    //添加监听事件
+    (function(){
+        var thePoint = points[i];
+        marker.addEventListener('click',
+            function(){
+            showInfo(map, thePoint);
+        });
+     })();
+};
+</script>
