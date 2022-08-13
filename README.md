@@ -8,9 +8,9 @@
 导入的是整理好的病例行踪excel**工作表**（注意是工作表，每天更新的信息存在不同表里），格式大概为下面两张图，
 数据来源是苏州本地宝（是的，我的信息来源就是这么low，对网速常年2G的我要求不要太高）。
 
-![Sample excel 1](./excel1.png)
+![Sample excel 1](excel1.png)
 
-![Sample excel 2](./excel2.png)
+![Sample excel 2](excel2.png)
 
 最后处理好导出的是一串字典，每个字典都对应一个位置，记录经纬度、病例编号/来源，和具体地址，也可以自由添加其他信息，比如病例关系，
 只要修改loop里的代码就可以了。
@@ -39,7 +39,7 @@ def getlnglat(address):
 ## 可视化地图html
 效果如下, 本来想用GitHub Page，但是显示不出来。就需要先下到电脑里再打开。文件里已经删除了我的密钥，所以打开的时候需要加上密钥。
 
-![Sample html](./sample_html.png)
+![Sample html](sample_html.png)
 
 ## 待改进的地方
 可以改进的地方太多了。做这个网页一天之前，我一个html都没写过。看到sample code，我当场自闭了。    
